@@ -1,0 +1,74 @@
+proyecto|nombre del proyecto,como se llama,ouroboros car: El proyecto se llama Ouroboros Car. Es una plataforma digital para la gestión inteligente de flotas y talleres, enfocada en trazabilidad técnica, mantenimiento y control operativo.
+
+descripcion|que es,explicacion del sistema: Ouroboros Car es una aplicación que integra la gestión del taller y la flota en un solo sistema, permitiendo controlar vehículos, mantenimiento, inventario y datos técnicos en tiempo real.
+
+problema|problematica,que problema resuelve: El problema es la falta de trazabilidad técnica, mantenimiento desorganizado, costos ocultos y baja disponibilidad de vehículos debido a mala gestión.
+
+problema mantenimiento|fallas,reparaciones costosas: Muchas empresas trabajan con mantenimiento correctivo en lugar de preventivo, lo que genera altos costos y fallas inesperadas.
+
+problema disponibilidad|vehiculos parados: Los vehículos permanecen fuera de servicio más tiempo del necesario por falta de planificación.
+
+problema trazabilidad|historial,seguimiento: No existe un historial claro de reparaciones, repuestos usados ni responsables técnicos.
+
+problema decisiones|datos,analisis: Las empresas toman decisiones sin datos técnicos ni indicadores claros.
+
+solucion|como funciona,propuesta: Ouroboros Car crea un ecosistema digital que conecta el taller con la gestión de flota, transformando datos técnicos en decisiones estratégicas.
+
+beneficios|ventajas,impacto: Permite reducir costos, mejorar la disponibilidad de vehículos, optimizar tiempos de reparación y aumentar la rentabilidad operativa.
+
+trazabilidad|trazabilidad tecnica,seguimiento tecnico: La trazabilidad técnica es el registro completo de cada intervención en un vehículo, incluyendo diagnóstico, repuestos, tiempo de reparación y técnico responsable.
+
+mttr|tiempo medio de reparacion: El MTTR es el tiempo promedio que tarda una reparación, y el sistema ayuda a reducirlo mediante mejor gestión y seguimiento.
+
+inventario tecnico|repuestos,insumos: El sistema permite auditar el uso de repuestos e insumos técnicos en cada servicio realizado.
+
+seguridad flota|cumplimiento,control: Garantiza que los vehículos cumplan con estándares de seguridad y mantenimiento preventivo.
+
+funcionalidades|funciones,modulos: El sistema incluye gestión de citas, mantenimiento, inventario, usuarios, diagnósticos y reportes técnicos.
+
+citas|agenda tecnica,programar mantenimiento: Permite programar citas de mantenimiento preventivo y correctivo para mejorar la organización del taller.
+
+mantenimiento|reparaciones,servicio tecnico: Registra todas las intervenciones realizadas a los vehículos, creando un historial completo.
+
+diagnostico|revision tecnica,fallas: Permite registrar diagnósticos técnicos para identificar problemas en los vehículos.
+
+reportes|informes,analisis: Genera reportes automáticos para analizar el rendimiento del taller y la flota.
+
+kpis|metricas,indicadores tecnicos: El sistema utiliza KPIs para medir eficiencia, disponibilidad y costos operativos.
+
+kpi taller|eficiencia taller: Incluye métricas como MTTR, cumplimiento de citas y productividad por mecánico.
+
+kpi flota|disponibilidad vehiculos: Mide la utilización de la flota, días de parada y alertas de mantenimiento.
+
+kpi costos|gastos,control financiero: Analiza costos de mantenimiento, rotación de repuestos y desperdicio de insumos.
+
+usuarios|roles,quienes usan el sistema: El sistema está diseñado para administradores de flota, mecánicos, jefes de taller y gerentes de ventas.
+
+administrador flota|gestor: Controla vehículos, reportes y operación general del sistema.
+
+mecanico|tecnico: Gestiona diagnósticos, mantenimientos y actualiza el estado de los vehículos.
+
+jefe taller|supervisor: Supervisa la operación del taller y el cumplimiento de mantenimiento.
+
+gerente ventas|comercial: Analiza reportes y toma decisiones estratégicas.
+
+tecnologia|react,pwa,supabase: El sistema está desarrollado con React como PWA y utiliza Supabase con PostgreSQL como base de datos.
+
+pwa|app movil web: La aplicación funciona como una app móvil sin necesidad de instalación, accesible desde cualquier dispositivo.
+
+base de datos|bd,postgresql: Se utiliza PostgreSQL para almacenar la información de manera segura y eficiente.
+
+flujo sistema|como funciona el sistema: El sistema recopila datos, los procesa, los analiza y los presenta en dashboards para facilitar la toma de decisiones.
+
+dashboard|panel,visualizacion: Permite visualizar métricas y estado de la flota en tiempo real.
+
+faq trazabilidad|que es trazabilidad tecnica: Es el historial completo y auditable de cada servicio realizado a un vehículo.
+
+faq usuarios|quienes usan la plataforma: Administradores, mecánicos, jefes de taller y gerentes de ventas.
+
+faq decisiones|como ayuda decisiones: Permite tomar decisiones basadas en datos mediante reportes y KPIs técnicos.
+
+disponibilidad|sistema activo: La plataforma está disponible en todo momento desde cualquier dispositivo moderno.
+
+rentabilidad|ganancia,beneficio economico: Mejora la rentabilidad al reducir costos y optimizar operaciones.
+

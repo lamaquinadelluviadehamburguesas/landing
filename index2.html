@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ouroboros Car | Gestión Inteligente de Flota y Taller</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#C4A77D', // Dorado Ouroboros
+                        secondary: '#FF6B00', // Naranja Eléctrico
+                        dark: '#1A1A1A', // Carbón Mate
+                        lightbg: '#F5F5F5'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+
+        .glass-effect {
+            background: rgba(26, 26, 26, 0.85); /* Fondo oscuro con transparencia */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(196, 167, 125, 0.18); /* Borde dorado sutil */
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .team-photo {
+            object-fit: cover;
+        }
+
+        .ouroboros-logo-anim {
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @keyframes pop {
+            from {transform: scale(0.7); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-800 bg-lightbg antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+
+    <header class="fixed w-full glass-effect shadow-sm z-50 transition-all duration-500 transform translate-y-0" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#inicio" class="flex items-center gap-2 group">
+                    <div class="w-9 h-9 bg-dark rounded-lg flex items-center justify-center text-primary font-bold group-hover:rotate-12 transition-transform duration-300 border border-primary/30">
+                        ∞
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-primary group-hover:text-secondary transition-colors duration-300">
+                        Ouroboros Car
+                    </span>
+                </a>
+
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#acerca-del-proyecto" class="relative text-gray-300 hover:text-primary transition-colors text-sm font-medium group">
+                        Proyecto
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#problema" class="relative text-gray-300 hover:text-primary transition-colors text-sm font-medium group">
+                        Problema
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#solucion" class="relative text-gray-300 hover:text-primary transition-colors text-sm font-medium group">
+                        Solución
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#funcionalidades" class="relative text-gray-300 hover:text-primary transition-colors text-sm font-medium group">
+                        Funciones
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#kpis" class="relative text-gray-300 hover:text-primary transition-colors text-sm font-medium group">
+                        Métricas
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#faq" class="relative text-gray-300 hover:text-primary transition-colors text-sm font-medium group">
+                        FAQ
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+
+                <a href="#cta-final" class="bg-secondary text-white px-5 py-2 rounded-full font-medium hover:bg-orange-700 hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300 text-sm">
+                    Solicitar Demo
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio" class="pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-dark border-b border-primary/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left z-10 animate-on-scroll">
+                    <div class="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold mb-6 tracking-wide border border-primary/20">
+                        Plataforma Integral para Flotas y Talleres
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+                        Trazabilidad y control total de tu flota con
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                            Ouroboros Car
+                        </span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
+                        Optimiza la disponibilidad de tus vehículos, gestiona el mantenimiento preventivo y audita cada servicio técnico en tiempo real para maximizar la rentabilidad.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#cta-final" class="group bg-secondary text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-orange-500/40 hover:-translate-y-1 flex items-center justify-center gap-2 overflow-hidden relative">
+                            <i data-lucide="car" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                            Ver Dashboard
+                        </a>
+                        <p class="text-sm text-gray-400 mt-3 sm:mt-0 sm:self-center">
+                            Menos tiempo en taller, más tiempo en ruta.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative mx-auto w-full max-w-md flex justify-center animate-on-scroll delay-200">
+                    <div class="absolute -top-10 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
+                    <div class="absolute -bottom-10 left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 1s;"></div>
+
+                    <div class="w-[300px] h-[600px] bg-gray-900 rounded-[3rem] shadow-2xl border-[12px] border-gray-800 flex items-center justify-center relative overflow-hidden group hover:border-gray-700 transition-colors duration-500">
+                        <!-- Notch del teléfono -->
+                        <div class="absolute top-0 inset-x-0 h-6 bg-gray-800 rounded-b-2xl w-36 mx-auto z-20"></div>
+                        
+                        <div class="text-center p-6 transform group-hover:scale-105 transition-transform duration-500 z-10">
+                            <i data-lucide="smartphone" class="w-16 h-16 text-primary/50 mx-auto mb-4 ouroboros-logo-anim"></i>
+                            <p class="text-primary/70 font-medium px-4">
+                                Mockup de la App Móvil
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="acerca-del-proyecto" class="py-24 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <h2 class="text-secondary font-semibold tracking-wide uppercase text-sm mb-2">Acerca del Proyecto</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-dark mb-4">
+                    Ouroboros Car: Aplicación Móvil Híbrida
+                </h3>
+                <p class="text-lg text-gray-600">
+                    Desarrollo de una aplicación móvil híbrida (PWA) de una concesionaria de carros que resuelve la falta de gestión integrada de inventarios, citas e historial de mantenimientos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contexto -->
+                <div class="bg-gray-50 p-8 md:p-10 rounded-3xl border border-primary/10 hover:shadow-xl transition-all animate-on-scroll">
+                    <div class="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center text-primary mb-6 shadow-inner">
+                        <i data-lucide="book-open" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-dark mb-4">Contexto del Negocio</h4>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Ouroboros Car es una empresa nicaragüense enfocada en la modernización del sector automotriz, integrando servicios de renta de vehículos y mantenimiento técnico especializado. El negocio se basa en la disponibilidad inmediata de activos (flota) y la precisión técnica del taller.
+                    </p>
+                    <ul class="space-y-4 text-gray-600 text-sm">
+                        <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-secondary shrink-0 mt-0.5"></i>
+                            <span><b>Procesos fundamentales:</b> Gestión de disponibilidad de unidades, programación de servicios preventivos/correctivos y administración de la relación con el cliente (CRM).</span>
+                        </li>
+                        <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-secondary shrink-0 mt-0.5"></i>
+                            <span><b>Transacciones comerciales:</b> Gestión de contratos de renta, facturación mecánica, control de inventario de repuestos y registro de egresos por mantenimiento.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Objetivos -->
+                <div class="bg-dark p-8 md:p-10 rounded-3xl border border-primary/20 shadow-2xl text-white hover:border-primary/40 transition-all animate-on-scroll delay-100 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-secondary/20 rounded-2xl flex items-center justify-center text-secondary mb-6 shadow-inner">
+                            <i data-lucide="target" class="w-7 h-7"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-4 text-primary">Objetivo General</h4>
+                        <p class="text-gray-300 mb-8 text-sm leading-relaxed border-l-4 border-secondary pl-4">
+                            Desarrollar una aplicación móvil híbrida de una concesionaria de carros optimizando el inventario, ventas, citas y consultas implementando funcionalidades técnicas de servicios en línea y mantenimientos con citas programadas y repuestos mecánicos.
+                        </p>
+                        
+                        <h5 class="text-lg font-bold mb-4 text-white">Objetivos Específicos</h5>
+                        <ul class="space-y-5 text-gray-400 text-sm">
+                            <li class="flex items-start gap-3 group">
+                                <div class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0 group-hover:scale-150 transition-transform"></div>
+                                <p>Identificar las funcionalidades requeridas para el desarrollo del sistema de gestión de concesionarias, en coordinación con las necesidades de los roles involucrados.</p>
+                            </li>
+                            <li class="flex items-start gap-3 group">
+                                <div class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0 group-hover:scale-150 transition-transform"></div>
+                                <p>Codificar la aplicación híbrida en React Native con soporte en Supabase, cumpliendo con especificaciones técnicas, diseñando una arquitectura fluida y coherente con la identidad del negocio.</p>
+                            </li>
+                            <li class="flex items-start gap-3 group">
+                                <div class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0 group-hover:scale-150 transition-transform"></div>
+                                <p>Realizar pruebas detalladas de validaciones que confirmen el correcto funcionamiento, estabilidad y rendimiento del sistema garantizando la trazabilidad de los procesos.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="problema" class="py-20 bg-dark text-white border-t border-primary/10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-on-scroll text-primary">
+                El problema de la gestión manual de flota
+            </h2>
+            <p class="text-xl text-gray-400 mb-10 animate-on-scroll delay-100">
+                La falta de trazabilidad técnica y el control ineficiente del mantenimiento generan costos ocultos, paradas imprevistas y pérdida de valor de los activos.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left mt-12">
+                <div class="bg-gray-900 p-6 rounded-2xl border border-primary/10 hover:border-secondary/30 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll">
+                    <div class="w-12 h-12 bg-red-950/50 rounded-xl flex items-center justify-center text-red-400 mb-4 border border-red-900">
+                        <i data-lucide="wrench" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Mantenimiento Correctivo</h3>
+                    <p class="text-gray-400">Reparaciones costosas por falta de seguimiento preventivo.</p>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-2xl border border-primary/10 hover:border-secondary/30 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll delay-100">
+                    <div class="w-12 h-12 bg-red-950/50 rounded-xl flex items-center justify-center text-red-400 mb-4 border border-red-900">
+                        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Baja Disponibilidad</h3>
+                    <p class="text-gray-400">Vehículos parados innecesariamente por mala planificación.</p>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-2xl border border-primary/10 hover:border-secondary/30 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll delay-200">
+                    <div class="w-12 h-12 bg-red-950/50 rounded-xl flex items-center justify-center text-red-400 mb-4 border border-red-900">
+                        <i data-lucide="file-text" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Falta de Trazabilidad</h3>
+                    <p class="text-gray-400">Sin historial claro de quién, cuándo y qué repuestos se usaron.</p>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-2xl border border-primary/10 hover:border-secondary/30 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll delay-300">
+                    <div class="w-12 h-12 bg-red-950/50 rounded-xl flex items-center justify-center text-red-400 mb-4 border border-red-900">
+                        <i data-lucide="trending-down" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Decisiones Ciegas</h3>
+                    <p class="text-gray-400">Sin KPIs técnicos para optimizar la renovación de unidades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solucion" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <h2 class="text-secondary font-semibold tracking-wide uppercase text-sm mb-2">La solución</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-dark mb-4">
+                    Un ecosistema digital para la trazabilidad técnica de tu flota
+                </h3>
+                <p class="text-lg text-gray-600">
+                    Ouroboros Car integra la gestión operativa del taller con el monitoreo administrativo de la flota, transformando datos técnicos en decisiones rentables y garantizando la integridad de cada vehículo.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="order-2 md:order-1 animate-on-scroll">
+                    <h4 class="text-2xl font-bold mb-4">Beneficios principales (Trazabilidad Técnica)</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-gray-700 p-2 hover:bg-gray-50 rounded-lg transition-colors">
+                            <div class="bg-orange-100 p-1 rounded-full border border-secondary/20">
+                                <i data-lucide="shield-check" class="text-secondary w-4 h-4"></i>
+                            </div>
+                            Garantiza la seguridad y el cumplimiento normativo de la flota.
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-700 p-2 hover:bg-gray-50 rounded-lg transition-colors">
+                            <div class="bg-orange-100 p-1 rounded-full border border-secondary/20">
+                                <i data-lucide="clock" class="text-secondary w-4 h-4"></i>
+                            </div>
+                            Reduce el MTTR (Tiempo Medio de Reparación) optimizando flujos.
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-700 p-2 hover:bg-gray-50 rounded-lg transition-colors">
+                            <div class="bg-orange-100 p-1 rounded-full border border-secondary/20">
+                                <i data-lucide="database" class="text-secondary w-4 h-4"></i>
+                            </div>
+                            Audita el uso de repuestos e insumos técnicos por servicio.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="order-1 md:order-2 bg-gray-100 rounded-2xl aspect-video flex items-center justify-center border border-gray-200 group overflow-hidden cursor-pointer animate-on-scroll delay-200">
+                    <div class="transform group-hover:scale-110 transition-transform duration-700 text-center p-6">
+                        <i data-lucide="layout-grid" class="w-12 h-12 text-primary/40 mx-auto mb-2"></i>
+                        <p class="text-primary/70 font-medium">
+                            Captura del Módulo de Taller o Agenda Técnica
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kpis" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-dark mb-4 animate-on-scroll">Métricas y KPIs Técnicos</h2>
+            <p class="text-gray-600 mb-12 max-w-3xl mx-auto animate-on-scroll delay-100">
+                Ouroboros Car propone indicadores avanzados para medir la eficiencia del taller, la salud de los activos y la rentabilidad operativa.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 animate-on-scroll">
+                    <h3 class="font-bold text-lg mb-3 text-dark">Eficiencia del Taller</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>• MTTR (Tiempo Medio de Reparación).</li>
+                        <li>• Cumplimiento de Citas Técnicas.</li>
+                        <li>• Productividad por Mecánico.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 animate-on-scroll delay-100">
+                    <h3 class="font-bold text-lg mb-3 text-dark">Disponibilidad de Activos</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>• Porcentaje de Utilización de Flota.</li>
+                        <li>• Días de Parada por Mantenimiento.</li>
+                        <li>• Alertas Vencidas de Preventivo.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 animate-on-scroll delay-200">
+                    <h3 class="font-bold text-lg mb-3 text-dark">Control de Costos</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>• Costo de Mantenimiento por KM.</li>
+                        <li>• Rotación de Inventario de Repuestos.</li>
+                        <li>• % Desperdicio de Insumos Auditable.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 bg-dark">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-primary mb-12 animate-on-scroll">
+                Preguntas frecuentes
+            </h2>
+
+            <div class="space-y-4">
+                <details class="group bg-gray-900 rounded-xl cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 animate-on-scroll border border-primary/10">
+                    <summary class="flex justify-between items-center font-medium p-6 text-white">
+                        <span class="text-lg group-hover:text-primary transition-colors">
+                            ¿Qué es la trazabilidad técnica en Ouroboros Car?
+                        </span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 bg-gray-800 p-1 rounded-full shadow-sm">
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-primary"></i>
+                        </span>
+                    </summary>
+                    <div class="text-gray-300 px-6 pb-6 pt-0 animate-[fadeIn_0.3s_ease-in-out]">
+                        Es el historial completo y auditable de cada intervención en un vehículo, incluyendo diagnósticos, repuestos utilizados, tiempos de reparación y el técnico responsable.
+                    </div>
+                </details>
+
+                <details class="group bg-gray-900 rounded-xl cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 animate-on-scroll border border-primary/10">
+                    <summary class="flex justify-between items-center font-medium p-6 text-white">
+                        <span class="text-lg group-hover:text-primary transition-colors">
+                            ¿Quiénes usan la plataforma?
+                        </span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 bg-gray-800 p-1 rounded-full shadow-sm">
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-primary"></i>
+                        </span>
+                    </summary>
+                    <div class="text-gray-300 px-6 pb-6 pt-0 animate-[fadeIn_0.3s_ease-in-out]">
+                        Está orientada a Administradores de Flota, Mecánicos y Jefes de Taller, y Gerentes de Ventas, cada uno con funciones y dashboards específicos (H026).
+                    </div>
+                </details>
+
+                <details class="group bg-gray-900 rounded-xl cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 animate-on-scroll border border-primary/10">
+                    <summary class="flex justify-between items-center font-medium p-6 text-white">
+                        <span class="text-lg group-hover:text-primary transition-colors">
+                            ¿Cómo ayuda a la toma de decisiones?
+                        </span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 bg-gray-800 p-1 rounded-full shadow-sm">
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-primary"></i>
+                        </span>
+                    </summary>
+                    <div class="text-gray-300 px-6 pb-6 pt-0 animate-[fadeIn_0.3s_ease-in-out]">
+                        Visualizando reportes automáticos y dashboards con KPIs técnicos, permitiendo identificar cuellos de botella en el taller y optimizar el ciclo de vida de las unidades.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section id="chatbot" class="py-20 bg-gray-100 border-t border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="animate-on-scroll text-center lg:text-left">
+                    <div class="inline-flex items-center gap-3 bg-primary/10 text-primary px-4 py-2 rounded-full font-semibold mb-6 border border-primary/20">
+                        <span class="ouroboros-logo-anim text-3xl">∞</span>
+                        Asistente Ouroboros
+                    </div>
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">
+                        ¿Quieres auditar tu flota inteligentemente?
+                    </h2>
+
+                    <p class="text-lg text-gray-600 mb-6">
+                        Puedes hablar con nuestro asistente virtual para conocer cómo Ouroboros Car gestiona la trazabilidad técnica, optimiza el taller y audita el mantenimiento preventivo.
+                    </p>
+
+                    <div class="bg-white rounded-2xl shadow-md p-5 border border-primary/10">
+                        <p class="text-gray-700 text-base md:text-lg">
+                            <span class="font-bold text-secondary">OuroBot dice:</span>
+                            “Hola 👋, pregúntame cómo podemos reducir el MTTR de tu taller o cómo auditar el uso de repuestos en cada servicio técnico.”
+                        </p>
+                    </div>
+                </div>
+
+                <div class="animate-on-scroll delay-200">
+                    <div class="bg-dark rounded-3xl shadow-xl border border-primary/20 overflow-hidden">
+                        <div class="bg-dark text-white px-6 py-4 flex items-center gap-3 border-b border-primary/10">
+                            <span class="text-2xl text-primaryouroboros-logo-anim">∞</span>
+                            <div>
+                                <h3 class="font-bold text-lg text-primary">Chat de Ayuda Ouroboros</h3>
+                                <p class="text-sm text-gray-300">Auditoría Técnica Disponible</p>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-[500px] md:h-[600px] bg-gray-950 flex flex-col">
+                             <div id="chat-messages" class="flex-1 p-6 overflow-y-auto flex flex-col gap-4 scroll-smooth">
+                                <!-- Mensaje inicial del bot -->
+                                <div class="self-start bg-gray-800 text-gray-200 p-3 rounded-2xl rounded-bl-sm max-w-[80%] shadow-md border border-primary/10">
+                                    ¡Hola! Soy OuroBot. ¿En qué te puedo ayudar hoy?
+                                </div>
+                            </div>
+                            <div class="p-4 bg-dark border-t border-primary/10">
+                                <div class="flex items-center gap-2">
+                                    <input type="text" id="chat-input-field" placeholder="Escribe un mensaje..." class="flex-1 bg-gray-900 text-white px-4 py-3 rounded-full border border-primary/20 focus:outline-none focus:border-primary transition-colors">
+                                    <button onclick="enviarMensaje()" class="bg-primary text-dark p-3 rounded-full hover:bg-secondary transition-colors duration-300 flex items-center justify-center">
+                                        <i data-lucide="send" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta-final" class="py-24 bg-dark relative overflow-hidden border-t border-primary/10">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-secondary/10 blur-3xl transition-transform duration-1000 hover:scale-150"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl transition-transform duration-1000 hover:scale-150"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
+                Lleva la rentabilidad de tu flota al nivel <span class="text-primary">Ouroboros</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                Una solución integral que audita diagnósticos, agenda mantenimiento preventivo y visualiza KPIs técnicos en tiempo real.
+            </p>
+
+            <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3 group">
+                <input
+                    type="email"
+                    placeholder="Tu correo corporativo"
+                    class="flex-1 px-5 py-3 rounded-full text-gray-900 bg-white focus:outline-none focus:ring-4 focus:ring-secondary/50 transition-all shadow-lg border border-primary/20"
+                    required
+                >
+                <button
+                    type="submit"
+                    class="bg-secondary text-white px-8 py-3 rounded-full font-bold hover:bg-orange-700 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 whitespace-nowrap active:scale-95"
+                >
+                    Solicitar Acceso
+                </button>
+            </form>
+
+            <p class="text-sm text-gray-500 mt-4 opacity-80">
+                <i data-lucide="lock" class="w-4 h-4 inline mr-1"></i>
+                Trazabilidad y control técnico garantizado.
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-gray-500 py-12 border-t border-primary/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+                <div class="w-6 h-6 bg-gray-900 rounded text-xs flex items-center justify-center text-primary font-bold border border-primary/30">∞</div>
+                <span class="font-semibold text-primary">Ouroboros Car</span>
+            </div>
+
+            <p class="text-sm text-center">
+                © 2026 Ouroboros Car - Trazabilidad Técnica Integral
+            </p>
+
+            <div class="flex gap-4">
+                <a href="#inicio" class="hover:text-primary hover:-translate-y-1 transition-all">Inicio</a>
+                <a href="#funcionalidades" class="hover:text-primary hover:-translate-y-1 transition-all">Funciones</a>
+                <a href="#cta-final" class="hover:text-primary hover:-translate-y-1 transition-all">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const header = document.getElementById('main-header');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md', 'bg-dark/95');
+                header.classList.remove('shadow-sm', 'bg-dark/85');
+            } else {
+                header.classList.remove('shadow-md', 'bg-dark/95');
+                header.classList.add('shadow-sm', 'bg-dark/85');
+            }
+
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                header.classList.add('-translate-y-full');
+            } else {
+                header.classList.remove('-translate-y-full');
+            }
+
+            lastScrollY = window.scrollY;
+        }, { passive: true });
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // ================= MEMORIA Y CONTEXTO =================
+        let contexto = [];
+
+        // ================= STOP WORDS =================
+        const stopWords = new Set(["el","la","los","las","un","una","unos","unas","y","o","pero","de","del","al","en","con","por","para","como","que","a","su","sus","mi","mis","tu","tus","es","son"]);
+
+        // ================= BASE DE CONOCIMIENTO (ULTRA MEJORADA) =================
+        const baseDatos = [
+            { tema: "proyecto", keywords: ["proyecto","nombre del proyecto", "como se llama", "ouroboros car", "app", "sistema"], texto: "El proyecto se llama Ouroboros Car. Es una plataforma digital para la gestión inteligente de flotas y talleres, enfocada en trazabilidad técnica, mantenimiento y control operativo." },
+            { tema: "descripcion", keywords: ["que es", "explicacion del sistema"], texto: "Ouroboros Car es una aplicación que integra la gestión del taller y la flota en un solo sistema, permitiendo controlar vehículos, mantenimiento, inventario y datos técnicos en tiempo real." },
+            { tema: "problema", keywords: ["problema","problematica", "que problema resuelve"], texto: "El problema es la falta de trazabilidad técnica, mantenimiento desorganizado, costos ocultos y baja disponibilidad de vehículos debido a mala gestión." },
+            { tema: "problema mantenimiento", keywords: ["fallas", "reparaciones costosas"], texto: "Muchas empresas trabajan con mantenimiento correctivo en lugar de preventivo, lo que genera altos costos y fallas inesperadas." },
+            { tema: "problema disponibilidad", keywords: ["vehiculos parados"], texto: "Los vehículos permanecen fuera de servicio más tiempo del necesario por falta de planificación." },
+            { tema: "problema trazabilidad", keywords: ["historial", "seguimiento"], texto: "No existe un historial claro de reparaciones, repuestos usados ni responsables técnicos." },
+            { tema: "problema decisiones", keywords: ["datos", "analisis"], texto: "Las empresas toman decisiones sin datos técnicos ni indicadores claros." },
+            { tema: "solucion", keywords: ["solucion","como funciona", "propuesta"], texto: "Ouroboros Car crea un ecosistema digital que conecta el taller con la gestión de flota, transformando datos técnicos en decisiones estratégicas." },
+            { tema: "beneficios", keywords: ["beneficios","ventajas", "impacto"], texto: "Permite reducir costos, mejorar la disponibilidad de vehículos, optimizar tiempos de reparación y aumentar la rentabilidad operativa." },
+            { tema: "trazabilidad", keywords: ["trazabilidad tecnica", "seguimiento tecnico"], texto: "La trazabilidad técnica es el registro completo de cada intervención en un vehículo, incluyendo diagnóstico, repuestos, tiempo de reparación y técnico responsable." },
+            { tema: "mttr", keywords: ["tiempo medio de reparacion", "mttr"], texto: "El MTTR es el tiempo promedio que tarda una reparación, y el sistema ayuda a reducirlo mediante mejor gestión y seguimiento." },
+            { tema: "inventario tecnico", keywords: ["inventario", "repuestos", "insumos"], texto: "El sistema permite auditar el uso de repuestos e insumos técnicos en cada servicio realizado." },
+            { tema: "seguridad flota", keywords: ["seguridad", "cumplimiento", "control"], texto: "Garantiza que los vehículos cumplan con estándares de seguridad y mantenimiento preventivo." },
+            { tema: "funcionalidades", keywords: ["funcionalidades","funciones", "modulos"], texto: "El sistema incluye gestión de citas, mantenimiento, inventario, usuarios, diagnósticos y reportes técnicos." },
+            { tema: "citas", keywords: ["citas", "agenda tecnica", "programar mantenimiento", "agendar"], texto: "Permite programar citas de mantenimiento preventivo y correctivo para mejorar la organización del taller." },
+            { tema: "mantenimiento", keywords: ["mantenimiento", "reparaciones", "servicio tecnico"], texto: "Registra todas las intervenciones realizadas a los vehículos, creando un historial completo." },
+            { tema: "diagnostico", keywords: ["diagnostico", "revision tecnica", "fallas"], texto: "Permite registrar diagnósticos técnicos para identificar problemas en los vehículos." },
+            { tema: "reportes", keywords: ["reportes", "informes", "analisis"], texto: "Genera reportes automáticos para analizar el rendimiento del taller y la flota." },
+            { tema: "kpis", keywords: ["kpi", "metricas", "indicadores tecnicos"], texto: "El sistema utiliza KPIs para medir eficiencia, disponibilidad y costos operativos." },
+            { tema: "kpi taller", keywords: ["eficiencia taller"], texto: "Incluye métricas como MTTR, cumplimiento de citas y productividad por mecánico." },
+            { tema: "kpi flota", keywords: ["disponibilidad vehiculos"], texto: "Mide la utilización de la flota, días de parada y alertas de mantenimiento." },
+            { tema: "kpi costos", keywords: ["gastos", "control financiero"], texto: "Analiza costos de mantenimiento, rotación de repuestos y desperdicio de insumos." },
+            { tema: "usuarios", keywords: ["usuarios", "roles", "quienes usan el sistema"], texto: "El sistema está diseñado para administradores de flota, mecánicos, jefes de taller y gerentes de ventas." },
+            { tema: "administrador flota", keywords: ["administrador", "gestor"], texto: "Controla vehículos, reportes y operación general del sistema." },
+            { tema: "mecanico", keywords: ["mecanico", "tecnico"], texto: "Gestiona diagnósticos, mantenimientos y actualiza el estado de los vehículos." },
+            { tema: "jefe taller", keywords: ["jefe taller", "supervisor"], texto: "Supervisa la operación del taller y el cumplimiento de mantenimiento." },
+            { tema: "gerente ventas", keywords: ["gerente", "comercial"], texto: "Analiza reportes y toma decisiones estratégicas." },
+            { tema: "tecnologia", keywords: ["tecnologia", "react", "pwa", "supabase"], texto: "El sistema está desarrollado con React como PWA y utiliza Supabase con PostgreSQL como base de datos." },
+            { tema: "pwa", keywords: ["pwa", "app movil web"], texto: "La aplicación funciona como una app móvil sin necesidad de instalación, accesible desde cualquier dispositivo." },
+            { tema: "base de datos", keywords: ["base de datos", "bd", "postgresql"], texto: "Se utiliza PostgreSQL para almacenar la información de manera segura y eficiente." },
+            { tema: "flujo sistema", keywords: ["flujo sistema", "como funciona el sistema"], texto: "El sistema recopila datos, los procesa, los analiza y los presenta en dashboards para facilitar la toma de decisiones." },
+            { tema: "dashboard", keywords: ["dashboard", "panel", "visualizacion"], texto: "Permite visualizar métricas y estado de la flota en tiempo real." },
+            { tema: "faq trazabilidad", keywords: ["faq", "que es trazabilidad tecnica"], texto: "Es el historial completo y auditable de cada servicio realizado a un vehículo." },
+            { tema: "faq usuarios", keywords: ["quienes usan la plataforma"], texto: "Administradores, mecánicos, jefes de taller y gerentes de ventas." },
+            { tema: "faq decisiones", keywords: ["como ayuda decisiones"], texto: "Permite tomar decisiones basadas en datos mediante reportes y KPIs técnicos." },
+            { tema: "disponibilidad", keywords: ["disponibilidad", "sistema activo"], texto: "La plataforma está disponible en todo momento desde cualquier dispositivo moderno." },
+            { tema: "rentabilidad", keywords: ["rentabilidad", "ganancia", "beneficio economico"], texto: "Mejora la rentabilidad al reducir costos y optimizar operaciones." }
+        ];
+
+        // ================= UTILIDADES =================
+        function limpiarTexto(texto) {
+            return texto.toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^\w\s]/gi, "");
+        }
+
+        function extraerPalabras(texto) {
+            return limpiarTexto(texto).split(" ").filter(p => p.length > 2 && !stopWords.has(p));
+        }
+
+        // ================= IA ULTRA MEJORADA =================
+        function responderIA(mensaje) {
+            const palabrasUsuario = extraerPalabras(mensaje);
+            let mejorScore = 0;
+            let mejorItem = null;
+
+            baseDatos.forEach(item => {
+                let score = 0;
+                
+                // 1. Coincidencia de Keywords (Peso Alto)
+                item.keywords.forEach(k => {
+                    const cleanK = limpiarTexto(k);
+                    // Match exacto en el mensaje original
+                    if (limpiarTexto(mensaje).includes(cleanK)) {
+                        score += 10;
+                    }
+                    
+                    // Match parcial por palabras
+                    palabrasUsuario.forEach(pu => {
+                        if (cleanK === pu) score += 5;
+                        else if (cleanK.includes(pu) || pu.includes(cleanK)) score += 2;
+                    });
+                });
+
+                // 2. Coincidencia con el texto de la respuesta (Peso Bajo)
+                const palabrasTexto = extraerPalabras(item.texto);
+                palabrasUsuario.forEach(pu => {
+                    if (palabrasTexto.includes(pu)) score += 1;
+                });
+
+                // 3. Afinidad de contexto (Si el usuario sigue hablando del mismo tema)
+                if (contexto.length > 0 && contexto[contexto.length - 1].tema === item.tema) {
+                    score += 3;
+                }
+
+                if (score > mejorScore) {
+                    mejorScore = score;
+                    mejorItem = item;
+                }
+            });
+
+            // Lógica de respuesta
+            if (mejorScore >= 5 && mejorItem) {
+                // Actualizar contexto
+                contexto.push(mejorItem);
+                if(contexto.length > 5) contexto.shift(); // mantener últimos 5
+                
+                return mejorItem.texto;
+            }
+
+            // Manejo de saludos rápidos
+            if (palabrasUsuario.length === 0 && limpiarTexto(mensaje).match(/(hola|hey|buenas|saludos)/)) {
+                 return "¡Hola de nuevo! ¿En qué más puedo ayudarte sobre Ouroboros Car?";
+            }
+
+            // Manejo de fallbacks (5 preguntas clave)
+            return "No estoy seguro de haber entendido. 😅 Como experto en Ouroboros Car, aquí tienes 5 preguntas clave que sí puedo responderte:\n\n1. ¿Cuál es el objetivo del proyecto?\n2. ¿Qué problema resuelve el sistema?\n3. ¿Cuáles son las funcionalidades principales?\n4. ¿Qué tecnología utilizan?\n5. ¿Cuáles son los beneficios de la trazabilidad?";
+        }
+
+        // ================= UI CHATBOT =================
+        function agregarMensaje(texto, tipo) {
+            const contenedor = document.getElementById("chat-messages");
+            const msg = document.createElement("div");
+            
+            if(tipo === "user") {
+                msg.className = "self-end bg-primary text-dark p-3 rounded-2xl rounded-br-sm max-w-[80%] shadow-md font-medium animate-[pop_0.3s_ease]";
+            } else {
+                msg.className = "self-start bg-gray-800 text-gray-200 p-3 rounded-2xl rounded-bl-sm max-w-[80%] shadow-md border border-primary/10 animate-[pop_0.3s_ease]";
+            }
+            
+            msg.innerText = texto;
+            contenedor.appendChild(msg);
+            contenedor.scrollTop = contenedor.scrollHeight;
+        }
+
+        function mostrarTyping() {
+            const contenedor = document.getElementById("chat-messages");
+            const typing = document.createElement("div");
+            typing.className = "self-start bg-gray-800 text-gray-200 p-4 rounded-2xl rounded-bl-sm max-w-[80%] shadow-md border border-primary/10 animate-[pop_0.3s_ease]";
+            typing.id = "typing";
+            typing.innerHTML = `
+                <div class="flex gap-1.5 items-center h-4">
+                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0s;"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s;"></div>
+                </div>
+            `;
+            contenedor.appendChild(typing);
+            contenedor.scrollTop = contenedor.scrollHeight;
+        }
+
+        function quitarTyping() {
+            const t = document.getElementById("typing");
+            if (t) t.remove();
+        }
+
+        function enviarMensaje() {
+            const input = document.getElementById("chat-input-field");
+            const texto = input.value;
+
+            if (!texto.trim()) return;
+
+            agregarMensaje(texto, "user");
+            input.value = "";
+
+            mostrarTyping();
+
+            setTimeout(() => {
+                quitarTyping();
+                const respuesta = responderIA(texto);
+                agregarMensaje(respuesta, "bot");
+            }, 600);
+        }
+
+        document.getElementById("chat-input-field").addEventListener("keypress", e => {
+            if (e.key === "Enter") enviarMensaje();
+        });
+    </script>
+</body>
+</html>
